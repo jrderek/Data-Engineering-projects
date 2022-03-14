@@ -1,30 +1,24 @@
-# Data-Engineering-projects
+## Description
+---
+This repo provides the ETL pipeline, to populate the sparkifydb database.  
+* The purpose of this database is to enable Sparkify to answer business questions it may have of its users, the types of songs they listen to and the artists of those songs using the data that it has in logs and files. The database provides a consistent and reliable source to store this data.
 
-Postgres ETL ✔️
+* This source of data will be useful in helping Sparkify reach some of its analytical goals, for example, finding out songs that have highest popularity or times of the day which is high in traffic.
 
-This project looks at data modelling for a fictitious music startup Sparkify, applying STAR schema to ingest data to simplify queries that answers business questions the product owner may have
+## Database Design and ETL Pipeline
+---
+* For the schema design, the STAR schema is used as it simplifies queries and provides fast aggregations of data.
 
+![Schema](schema.PNG)
 
-Cassandra ETL ✔️
+* For the ETL pipeline, Python is used as it contains libraries such as pandas, that simplifies data manipulation. It also allows connection to Postgres Database.
 
-Looking at the realm of big data, Cassandra helps to ingest large amounts of data in a NoSQL context. This project adopts a query centric approach in ingesting data into data tables in Cassandra, to answer business questions about a music app
+* There are 2 types of data involved, song and log data. For song data, it contains information about songs and artists, which we extract from and load into users and artists dimension tables
 
+* Log data gives the information of each user session. From log data, we extract and load into time, users dimension tables and songplays fact table.
 
-Web Scrapying using Scrapy, MongoDB ETL ✔️
+## Running the ETL Pipeline
+---
+* First, run create_tables.py to create the data tables using the schema design specified. If tables were created previously, they will be dropped and recreated.
 
-In storing semi-structured data, one form to store it in, is in the form of documents. MongoDB makes this possible, with a specific collection containing related documents. Each document contains fields of data which can be queried.
-In this project, data is scraped from a books listing website using Scrapy. The fields of each book, such as price of a book, ratings, whether it is available is stored in a document in the books collection in MongoDB.
-
-Data Warehousing with AWS Redshift ✔️
-
-This project creates a data warehouse, in AWS Redshift. A data warehouse provides a reliable and consistent foundation for users to query and answer some business questions based on requirements.
-
-Data Lake with Spark & AWS S3 ✔️
-
-This project creates a data lake, in AWS S3 using Spark.
-Why create a data lake? A data lake provides a reliable store for large amounts of data, from unstructured to semi-structured and even structured data. In this project, we ingest json files, denormalize them into fact and dimension tables and upload them into a AWS S3 data lake, in the form of parquet files.
-
-Data Pipelining with Airflow ✔️
-
-This project schedules data pipelines, to perform ETL from json files in S3 to Redshift using Airflow.
-Why use Airflow? Airflow allows workflows to be defined as code, they become more maintainable, versionable, testable, and collaborative
+* Next, run etl.py to populate the data tables created.
